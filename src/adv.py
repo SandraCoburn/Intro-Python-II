@@ -57,11 +57,15 @@ def game():
     yes_no = ["yes", "no"]
     current_room = room[room_name]
 
-    #introduction: 
+    #introduction:   
     name = input("What is your name?\n")
-    #player1 = Player(name, "outside")
-    print(f"Greetings, {name}. Let us start the adventure!")
-    print(f"You are currently {current_room}")
+   
+    player1 = Player(name, current_room)
+    print(f"Greetings, {player1.name}. Let us start the adventure!")
+    print(f"You are currently {player1.current_room}")
+    
+    
+          
     #Start of game:
     response = ""
     while response not in yes_no:
@@ -73,7 +77,7 @@ def game():
             quit()
         else: 
             print("I didn't understant that. Type yes or no. \n")
-
+    response = ""
     while response != "q":
         response = input("Which direction you want to go? [n], [s], [e] or [w]")
         if response == "n":
