@@ -1,5 +1,5 @@
 from room import Room
-from code import InteractiveConsole
+from player import Player
 
 # Declare all the rooms
 
@@ -50,5 +50,38 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+def game():
+    room_name = "outside"
+    #directions = ["n", "s", "e", "w"]
+    yes_no = ["yes", "no"]
+    current_room = room[room_name]
+
+    #introduction: 
+    name = input("What is your name?\n")
+    #player1 = Player(name, "outside")
+    print(f"Greetings, {name}. Let us start the adventure!")
+    print(f"You are currently {current_room}")
+    #Start of game:
+    response = ""
+    while response not in yes_no:
+        response = input("Would you like to start the game?\nyes/no\n")
+        if response == "yes":
+            print("You will step into the first room. What are you gonna find?")
+        elif response == "no":
+            print("You are not ready for this adventure. Good bye!")
+            quit()
+        else: 
+            print("I didn't understant that. Type yes or no. \n")
+
+    while response != "q":
+        response = input("Which direction you want to go? [n], [s], [e] or [w]")
+        if response == "n":
+            current_room = current_room.n_to
+            print(f"You are heading to the {current_room}")
+        else:
+            print("I didn't understand that. Enter n, s, e, or w to move or q to quit.\n")
+    print("Thanks for playing!")
+game()
 
 
