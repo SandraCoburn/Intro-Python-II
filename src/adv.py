@@ -1,4 +1,5 @@
 from room import Room
+from code import InteractiveConsole
 
 # Declare all the rooms
 
@@ -49,3 +50,5 @@ room['treasure'].s_to = room['narrow']
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
+
+
