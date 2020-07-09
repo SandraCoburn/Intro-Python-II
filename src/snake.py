@@ -1,7 +1,9 @@
 import time, curses
 
+
 #wrapper
 def main(screen):
+    screen = curses.initscr()
     curses.curs_set(0) #hide cursor
     screen.nodelay(True) #don't block I/O calls
 
@@ -30,7 +32,9 @@ def main(screen):
         direction = directions.get(screen.getch(), direction)
 
         screen.refresh()
-        time.sleep(.1)
+        time.sleep(0.1)
 if __name__ == '__main__':
-    curses.wrapper(main)
+        #screen = curses.initscr()
+    curses.wrapper(main) 
+    #main(1)
 #main(1)

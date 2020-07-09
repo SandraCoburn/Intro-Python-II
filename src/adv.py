@@ -1,13 +1,15 @@
 from room import Room
 from player import Player
 from pprint import pprint as pp
-from snake import main
+#from snake import main
+import snake
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons"), 
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -23,7 +25,10 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
+room['foyer'].items = [Item("bracelete", "gold"), Item("backpack", "leather backpack")]
+room['overlook'].items = [Item("parrot", "small parrot"), Item("snake", "pretty snake")]
+room['narrow'].items = [Item("rock", "lucky rock"), Item("stick", "wood stick")]
+room['treasure'].items = [Item("ring", "emerald ring"), Item("necklace", "pearls necklace")]
 
 # Link rooms together
 
@@ -68,34 +73,38 @@ def game():
     name = input("What is your name?\n")
     if len(name) > 0:  
         player1 = Player(name, current_room)
-        pp(f"Greetings, {player1.name}! Let us start the adventure!")
-        print(f"You are currently {player1.current_room}")
+        pp(f"Greetings, {player1.name.upper()}! Let us start the adventure!")
        
         #Start of game:
         response = ""
         while response not in yes_no:
             response = input("Would you like to start the game?\nyes/no\n")
             if response == "yes":
-                print("You will step into the first room. What are you gonna find?")
+                pp("You will step into the first room. What are you gonna find?")
             elif response == "no":
-                print("You are not ready for this adventure. Good bye!")
+                pp("You are not ready for this adventure. Good bye!")
                 quit()
             else: 
                 print("I didn't understant that. Type yes or no. \n")
         while True:
-            print(f'{player1.current_room}\n')
-            response = input("Which direction you want to go? [n], [s], [e] or [w] or [q] to exit").strip().lower().split()[0]
+            pp(f"You are currently in {player1.current_room}")
+            print("***************************************")
+            response = input("Which direction you want to go?\n pick one: [n], [s], [e] or [w] or [q] to exit\n").strip().lower().split()[0]
             response = response[0]
-            print(response)
+            pp(f"ok so you want to go {response}")
+            print("****************************************")
             if response == "q":
-                break
-            if response in directions:
+                print(f"Good bye {player1.name}")
+                exit(0)
+            elif response in directions:
                 player1.move(response)
+                if player1.current_room == room["treasure"]:
+                    pass #snake.main(1)
             else:
-                print("I didn't understand that. Enter n, s, e, or w to move or q to quit.\n")
-        print("Thanks for playing!")
+                pp("I didn't understand that. Enter n, s, e, or w to move or q to quit.\n")
+        pp("Thanks for playing!")
     else:
-        print("You need to provide your name. Try again!")
+        pp("You need to provide your name. Try again!")
 game()
 
 
