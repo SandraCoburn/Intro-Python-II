@@ -1,5 +1,7 @@
 from room import Room
 from player import Player
+from pprint import pprint as pp
+from snake import main
 
 # Declare all the rooms
 
@@ -51,41 +53,49 @@ room['treasure'].s_to = room['narrow']
 #
 # If the user enters "q", quit the game.
 
+#to change the text color in terminal
+def esc(code):
+    return f'\033{code}m'
+
+
 def game():
     room_name = "outside"
-    #directions = ["n", "s", "e", "w"]
+    directions = ["n", "s", "e", "w"]
     yes_no = ["yes", "no"]
     current_room = room[room_name]
 
-    #introduction:   
+    #introduction: 
     name = input("What is your name?\n")
-   
-    player1 = Player(name, current_room)
-    print(f"Greetings, {player1.name}. Let us start the adventure!")
-    print(f"You are currently {player1.current_room}")
-    
-    
-          
-    #Start of game:
-    response = ""
-    while response not in yes_no:
-        response = input("Would you like to start the game?\nyes/no\n")
-        if response == "yes":
-            print("You will step into the first room. What are you gonna find?")
-        elif response == "no":
-            print("You are not ready for this adventure. Good bye!")
-            quit()
-        else: 
-            print("I didn't understant that. Type yes or no. \n")
-    response = ""
-    while response != "q":
-        response = input("Which direction you want to go? [n], [s], [e] or [w]")
-        if response == "n":
-            current_room = current_room.n_to
-            print(f"You are heading to the {current_room}")
-        else:
-            print("I didn't understand that. Enter n, s, e, or w to move or q to quit.\n")
-    print("Thanks for playing!")
+    if len(name) > 0:  
+        player1 = Player(name, current_room)
+        pp(f"Greetings, {player1.name}! Let us start the adventure!")
+        print(f"You are currently {player1.current_room}")
+       
+        #Start of game:
+        response = ""
+        while response not in yes_no:
+            response = input("Would you like to start the game?\nyes/no\n")
+            if response == "yes":
+                print("You will step into the first room. What are you gonna find?")
+            elif response == "no":
+                print("You are not ready for this adventure. Good bye!")
+                quit()
+            else: 
+                print("I didn't understant that. Type yes or no. \n")
+        while True:
+            print(f'{player1.current_room}\n')
+            response = input("Which direction you want to go? [n], [s], [e] or [w] or [q] to exit").strip().lower().split()[0]
+            response = response[0]
+            print(response)
+            if response == "q":
+                break
+            if response in directions:
+                player1.move(response)
+            else:
+                print("I didn't understand that. Enter n, s, e, or w to move or q to quit.\n")
+        print("Thanks for playing!")
+    else:
+        print("You need to provide your name. Try again!")
 game()
 
 
