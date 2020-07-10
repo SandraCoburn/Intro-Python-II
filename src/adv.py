@@ -80,6 +80,7 @@ def game():
         while response not in yes_no:
             response = input("Would you like to start the game?\nyes/no\n")
             if response == "yes":
+                print("*********************************************************")
                 pp("You will step into the first room. What are you gonna find?")
             elif response == "no":
                 pp("You are not ready for this adventure. Good bye!")
@@ -87,8 +88,9 @@ def game():
             else: 
                 print("I didn't understant that. Type yes or no. \n")
         while True:
-            pp(f"You are currently in {player1.current_room}")
-            print("***************************************")
+            #print(f"You are currently in {player1.current_room}")
+            print(player1)
+            print("***************************************************************")
             response = input("Which direction you want to go?\n pick one: [n], [s], [e] or [w] or [q] to exit\n").strip().lower().split()[0]
             response = response[0]
             pp(f"ok so you want to go {response}")
@@ -98,10 +100,50 @@ def game():
                 exit(0)
             elif response in directions:
                 player1.move(response)
-                if player1.current_room == room["treasure"]:
-                    pass #snake.main(1)
+                if player1.current_room == room["foyer"]:
+                    for i, p in enumerate(room['foyer'].items):
+                        print(f"{i + 1} - {p}")
+                    selection = input("Which item do you want? [1/2]\n")
+                    player1.add_to_items(room["foyer"].items[int(selection)-1])
+                    print()
+                    print(f"you picked the {player1.items[0].name}!")
+                    print("*********************************************e")
+                    print()
+                    #pass #snake.main(1)
+                elif player1.current_room == room["overlook"]:
+                    for i, p in enumerate(room['overlook'].items):
+                        print(f"{i + 1} - {p}")
+                    selection = input("Which item do you want? [1/2]\n")
+                    player1.add_to_items(room["foyer"].items[int(selection)-1])
+                    print()
+                    print(f"you picked the {player1.items[0].name}!")
+                    print("*********************************************e")
+                    print()
+                elif player1.current_room == room["narrow"]:
+                    for i, p in enumerate(room['narrow'].items):
+                        print(f"{i + 1} - {p}")
+                    selection = input("Which item do you want? [1/2]\n")
+                    player1.add_to_items(room["foyer"].items[int(selection)-1])
+                    print()
+                    print(f"you picked the {player1.items[0].name}!")
+                    print("*********************************************e")
+                    print()
+                elif player1.current_room == room["treasure"]:
+                    for i, p in enumerate(room['treasure'].items):
+                        print(f"{i + 1} - {p}")
+                    selection = input("Which item do you want? [1/2]\n")
+                    player1.add_to_items(room["foyer"].items[int(selection)-1])
+                    print()
+                    print(f"you picked the {player1.items[0].name}!")
+                    print("*********************************************e")
+                    print(f"you have all these items: {len(player1.items)}")
+                    for n, i in enumerate(player1.items):
+                        print(f"{n + 1} - {i}")
+                    drop_item = input("To go back, you need to drop one item. Which one you pick?\n")
+                    player1.drop_from_items(player1.items[int(drop_item)-1])
+                    print("***************************************************")
             else:
-                pp("I didn't understand that. Enter n, s, e, or w to move or q to quit.\n")
+                pp("I didn't understand that. Enter [n, s, e, or w] to move or [q] to quit.\n")
         pp("Thanks for playing!")
     else:
         pp("You need to provide your name. Try again!")
